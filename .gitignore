@@ -129,4 +129,8 @@ dmypy.json
 .pyre/
 
 # JSON files
+<<<<<<< HEAD
 *.json
+=======
+*.json
+>>>>>>> b5cb1c14befa278208269bdbc434b753406b29ba
