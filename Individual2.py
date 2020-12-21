@@ -31,7 +31,7 @@ def add():
         products.sort(key=lambda item: item.get('name', ''))
 
 
-def list(products):
+def list_():
     line = '+-{}-+-{}-+-{}-+-{}-+'.format(
         '-' * 4,
         '-' * 30,
@@ -62,12 +62,11 @@ def list(products):
     print(line)
 
 
-def select(products):
-    name_user = input("Введите название интересующего магазина ")
+def select(shop_name):
 
     count = 0
     for product in products:
-        if name_user == product.get('shop'):
+        if shop_name == product.get('shop').lower():
             count += 1
             print(
                 '{:>4}: {} {}'.format(count, product.get('coast', ' '), product.get('name', ' '))
@@ -81,16 +80,16 @@ def load(filename):
         return json.load(f)
 
 
-def save(filename, products):
+def save(filename):
     with open(filename, 'w') as f:
         json.dump(products, f)
 
 
-def help():
+def help_():
     print("Список команд:\n")
     print("add - добавить студента;")
     print("list - вывести список студентов;")
-    print("select - запросить товары в выбранном магазине;")
+    print("select <магазин> - запросить товары в выбранном магазине")
     print("load <имя файла> - загрузить данные из файла;")
     print("save <имя файла> - сохранить данные в файл;")
     print("help - отобразить справку;")
@@ -114,10 +113,11 @@ if __name__ == '__main__':
             add()
 
         elif command == 'list':
-            list(products)
+            list_()
 
-        elif command == 'select':
-            select(products)
+        elif command.startswith('select '):
+            parts = command.split(' ', maxsplit=1)
+            select(parts[1])
 
         elif command.startswith('load '):
             parts = command.split(' ', maxsplit=1)
@@ -125,9 +125,9 @@ if __name__ == '__main__':
 
         elif command.startswith('save '):
             parts = command.split(' ', maxsplit=1)
-            save(parts[1], products)
+            save(parts[1])
 
         elif command == 'help':
-            help()
+            help_()
         else:
             error()
